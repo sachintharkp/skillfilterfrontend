@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from './Button';
 
@@ -23,6 +23,9 @@ function Navbar() {
         }
     };
 
+    useEffect(()=> {
+      showButton(); }, [] );
+
     //setting and event listner to detect the change of the screen
     window.addEventListener('resize',showButton);
 
@@ -31,7 +34,7 @@ function Navbar() {
      <nav className='navbar'>
         <div className='navbar-container'>
           
-          <Link to = "/" className='navbar-logo'>
+          <Link to = "/" className='navbar-logo' onClick={closeMobileMenu}>
             Skill Filter  <i className='fab fa-typo3'></i>
           </Link>
          
@@ -46,20 +49,12 @@ function Navbar() {
               </Link>
             </li>
             <li className='nav-item'>
-              <Link
-                to='/manager'
-                className='nav-links'
-                onClick={closeMobileMenu}
-              >
+              <Link to='/manager' className='nav-links' onClick={closeMobileMenu}>
                 Manager
               </Link>
             </li>
             <li>
-              <Link
-                to='/sign-up'
-                className='nav-links-mobile'
-                onClick={closeMobileMenu}
-              >
+              <Link to='/sign-up' className='nav-links-mobile' onClick={closeMobileMenu}>
                 Sign Up
               </Link>
             </li>
