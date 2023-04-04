@@ -1,33 +1,13 @@
 import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from './Button';
 
 import './Navbar.css';
 
 function Navbar() {
     const[click,setClick] = useState(false);
-    const[button,setButton] = useState(true);
     
     const handleClick = () => setClick(!click)
     const closeMobileMenu = () => setClick(false);
-
- 
-    //function to show button on ui depending on the screen size.
-
-    const showButton = () => {
-        if(window.innerWidth <= 960){
-            setButton(false);
-        }
-        else{
-            setButton(true);
-        }
-    };
-
-    useEffect(()=> {
-      showButton(); }, [] );
-
-    //setting and event listner to detect the change of the screen
-    window.addEventListener('resize',showButton);
 
   return (
     <>
@@ -35,7 +15,7 @@ function Navbar() {
         <div className='navbar-container'>
           
           <Link to = "/" className='navbar-logo' onClick={closeMobileMenu}>
-            Skill Filter  <i className='fab fa-typo3'></i>
+            FILTRERA  <i className='fab fa-typo3'></i>
           </Link>
          
           <div className='menu-icon' onClick={handleClick}>
@@ -53,13 +33,12 @@ function Navbar() {
                 Manager
               </Link>
             </li>
-            <li>
-              <Link to='/sign-up' className='nav-links-mobile' onClick={closeMobileMenu}>
-                Sign Up
+            <li className='nav-item'>
+              <Link to='/user' className='nav-links' onClick={closeMobileMenu}>
+                Account
               </Link>
             </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
         </div>
      </nav>
     </>
