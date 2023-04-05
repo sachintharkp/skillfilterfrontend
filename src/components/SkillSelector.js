@@ -68,7 +68,7 @@ return (
         className="dropdown"
         placeholder="Select Option"
         value={skill_list.find(obj => selected_skills.includes(obj.value))}
-        options ={skill_list.map(opt => ({ key: opt.skill_id ,label: opt.skillName, value: opt.skillName}))} 
+        options ={skill_list.map(opt => ({ key: opt.skillId ,label: opt.skillName, value: opt.skillName}))} 
         onChange={handleSelected}
         isMulti
         isClearable
