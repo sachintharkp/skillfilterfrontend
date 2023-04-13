@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import Select from 'react-select';
-import './SkillSelector.css';
-import { Container ,Paper,Button,Box} from '@material-ui/core';
+import './AllFeatures.css';
+import { Container ,Paper,Button} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 function SkillSelector() {

@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 
-function AddSkill() {
+function AddAssignment() {
     const useStyles = makeStyles((theme) => ({
         root: {
           '& > *': {
@@ -19,37 +19,48 @@ function AddSkill() {
         },
       }));
     
-    const FormpaperStyle={padding:'50px 20px', width:600,margin:"20px auto" ,maxHeight: 1200,overflow: 'auto'}
-
-    const ListpaperStyle={padding:'50px 20px', width:600,margin:"20px auto" ,maxHeight: 1200,overflow: 'auto'}
+    const paperStyle={padding:'50px 20px', width:600,margin:"20px auto" ,maxHeight: 1200,overflow: 'auto'}
     
     const classes = useStyles();
 
-    const[skillName,setSkillName] = useState('');
-    const[skillDescription,setSkillDesc] = useState('');
-    
-    const [skill_list,setSkills]=useState([])
-    
+    const[companyName,setCompany] = useState("");
+    const[position,setPosition] = useState("");
+    const[noSeats,setSeats] = useState("");    
+    const [assignment_list,setAssignments]=useState([]);
+
     const [isValid, setValidation] = React.useState(true);
     const [alertContent, setAlertContent] = useState('');
     
     const checkTextInput =(e)=>{
 
       //Check for the Company Name TextInput
-      if (!skillName.trim()) {
+      if (!companyName.trim()) {
         setValidation(false);
-        setAlertContent("Skill name is mandotory.");
+        setAlertContent("Company name is mandotory.");
         return;
       }
-      handleClick();
+      //Check for the Position TextInput
+      if (!position.trim()) {
+        setValidation(false);
+        setAlertContent("Position is mandotory.");
+        return;
+      }
+      //Check for the Available seats TextInput
+      if (!noSeats.trim()) {
+        setValidation(false);
+        setAlertContent("Number of seats is mandotory.");
+        return;
+        }
+
+        handleClick();
      
     };
-  
+
     useEffect(()=>{
-        fetch("http://localhost:8081/skill/getSkills")
+        fetch("http://localhost:8081/assignment/getAssignments")
         .then(res=>res.json())
         .then((result)=>{
-            setSkills(result);
+            setAssignments(result);
         }
       )
       },[])
@@ -57,16 +68,16 @@ function AddSkill() {
    
     const handleClick=(e)=>{
 
-        const skillSet = {skillName,skillDescription}
+        const assignmentSet = {companyName,position,noSeats}
         
-        fetch("http://localhost:8081/skill/add",{
+        fetch("http://localhost:8081/assignment/add",{
           method:"POST",
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(skillSet),
+          body: JSON.stringify(assignmentSet),
       }) .then(()=>{
-        console.log("New Skill added")
+        console.log("New Assignmnet added")
          })
          .then(data => console.log(data))
          .catch(err => console.log(err))
@@ -87,25 +98,27 @@ function AddSkill() {
       <div className='filter-container'> 
         <Grid container spacing={2}>
          <Grid item xs={6} md={6}  className={classes.grid} container justify="flex-end" alignItems="center" spacing={2}>            
-            <Paper elevation={3} style={FormpaperStyle}>  
-            <Typography gutterBottom variant="h5" component="div">Add skill</Typography>
+            <Paper elevation={3} style={paperStyle}>  
+            <Typography gutterBottom variant="h5" component="div">Add Assignment</Typography>
             <form className={classes.root} noValidate autoComplete="off">
             {!isValid ? <Alert severity='error'>{alertContent}</Alert> : <></> }
-            <TextField id="outlined-basic" label="Name" variant="outlined" fullWidth value={skillName} onChange={(e)=>{setSkillName(e.target.value)}} required/>
-            <TextField id="outlined-basic" label="Description" variant="outlined" fullWidth value={skillDescription} onChange={(e)=>setSkillDesc(e.target.value)}  />  
+            <TextField id="outlined-basic" label="Company" variant="outlined" fullWidth value={companyName} onChange={(e)=>{setCompany(e.target.value)}} required/>
+            <TextField id="outlined-basic" label="Position" variant="outlined" fullWidth value={position} onChange={(e)=>{setPosition(e.target.value)}} required  />  
+            <TextField id="outlined-basic" label="Available Seats" variant="outlined" fullWidth value={noSeats} onChange={(e)=>{setSeats(e.target.value)}} required />  
             <Button className='button-style' variant="contained" color="secondary"  size='medium' onClick={(e)=>{checkTextInput(e)}} > Add </Button>  
             </form>  
           </Paper>   
          </Grid>
          <Grid item xs={6} md={6}>
-          <Paper elevation={3} style={ListpaperStyle}>
-          <Typography gutterBottom variant="h5" component="div">All available skills</Typography>
-          <Alert severity="warning">Refresh the page to see if any new skills have been added.!</Alert>
+          <Paper elevation={3} style={paperStyle}>
+          <Typography gutterBottom variant="h5" component="div">All available assignments</Typography>
+          <Alert severity="warning">Refresh the page to see if any new assignments have been added.!</Alert>
           <List>
-                 {skill_list.map(skill=>(
-                 <Paper elevation={6} style={{margin:"10px",padding:"15px", textAlign:"left"}} key={skill.skillId}>
-                  Name:{' '+skill.skillName}<br/>
-                  Description:{' ' +skill.skillDescription}
+                 {assignment_list.map(assignment=>(
+                 <Paper elevation={6} style={{margin:"10px",padding:"15px", textAlign:"left"}} key={assignment.activeAssignmentId}>
+                  Company Name :{' '+assignment.companyName}<br/>
+                  Position :{' ' +assignment.position}<br/>
+                  Avialable Seats : {' '+assignment.noSeats}
                 </Paper>
                  ))}
           </List>       
@@ -114,6 +127,5 @@ function AddSkill() {
        </Grid>
     </div>
            );
-    }
-    
-    export default AddSkill
+}
+export default AddAssignment
