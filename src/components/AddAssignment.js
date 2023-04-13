@@ -19,8 +19,10 @@ function AddAssignment() {
         },
       }));
     
-    const paperStyle={padding:'50px 20px', width:600,margin:"20px auto" ,maxHeight: 1200,overflow: 'auto'}
-    
+      const FormpaperStyle={padding:'50px 20px',width: 600,margin:"20px auto" ,maxHeight: '100vh',overflow: 'auto'}
+
+      const ListpaperStyle={padding:'50px 20px',width: 'fit-content',margin:"20px auto" ,maxHeight: '100vh',overflow: 'auto'}
+      
     const classes = useStyles();
 
     const[companyName,setCompany] = useState("");
@@ -98,7 +100,7 @@ function AddAssignment() {
       <div className='filter-container'> 
         <Grid container spacing={2}>
          <Grid item xs={6} md={6}  className={classes.grid} container justify="flex-end" alignItems="center" spacing={2}>            
-            <Paper elevation={3} style={paperStyle}>  
+          <Paper elevation={3} style={FormpaperStyle}>  
             <Typography gutterBottom variant="h5" component="div">Add Assignment</Typography>
             <form className={classes.root} noValidate autoComplete="off">
             {!isValid ? <Alert severity='error'>{alertContent}</Alert> : <></> }
@@ -110,7 +112,7 @@ function AddAssignment() {
           </Paper>   
          </Grid>
          <Grid item xs={6} md={6}>
-          <Paper elevation={3} style={paperStyle}>
+          <Paper elevation={3} style={ListpaperStyle}>
           <Typography gutterBottom variant="h5" component="div">All available assignments</Typography>
           <Alert severity="warning">Refresh the page to see if any new assignments have been added.!</Alert>
           <List>

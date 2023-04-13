@@ -19,9 +19,9 @@ function AddSkill() {
         },
       }));
     
-    const FormpaperStyle={padding:'50px 20px', width:600,margin:"20px auto" ,maxHeight: 1200,overflow: 'auto'}
+    const FormpaperStyle={padding:'50px 20px',width: 600,margin:"20px auto" ,maxHeight: '100vh',overflow: 'auto'}
 
-    const ListpaperStyle={padding:'50px 20px', width:600,margin:"20px auto" ,maxHeight: 1200,overflow: 'auto'}
+    const ListpaperStyle={padding:'50px 20px',width: 'fit-content',margin:"20px auto" ,maxHeight: '100vh',overflow: 'auto'}
     
     const classes = useStyles();
 
