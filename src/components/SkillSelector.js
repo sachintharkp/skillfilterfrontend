@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
 
 const paperStyle={padding:'50px 20px', width:600,margin:"20px auto"}
 
+const FormpaperStyle={padding:'50px 20px',width: 600,margin:"20px auto" ,maxHeight: '100vh'}
+
+const ListpaperStyle={padding:'50px 20px',width: 'fit-content',margin:"20px auto" ,maxHeight: '100vh',overflow: 'auto'}
+
 const classes = useStyles();
 
 const [skill_list,setSkills]=useState([])
@@ -24,6 +28,8 @@ const [skill_list,setSkills]=useState([])
 const[employees_list,setEmployees]=useState([])
 
 const [selected_skills,setSelectedSkills]=useState([])
+
+const [showResults, setShowResults] = React.useState(false)
 
 
 useEffect(()=>{
@@ -53,16 +59,28 @@ const handleClick=(e)=>{
      .then(resp => resp.json())
      .then((result)=>{
         setEmployees(result);
+        setShowResults(true);
      })
      .then(data => console.log(data))
      .catch(err => console.log(err))
 }
 
-
+const Results = () => (
+  <Paper elevation={3} style={ListpaperStyle}>
+    <h3>Employees with Above Skills</h3>
+             {employees_list.map(employee=>(
+             <Paper elevation={6} style={{margin:"10px",padding:"15px", textAlign:"left"}} key={employee.userid}>
+              Name:{' '+employee.firstName +' ' +employee.lastName}<br/>
+              Email:{' ' +employee.username}<br/>
+              Experience : {' '+employee.experience}
+             </Paper>
+             ))}
+  </Paper>
+)
 
 return (
   <div className='filter-container'>
-    <Paper elevation={3} style={paperStyle}>  
+    <Paper elevation={3} style={FormpaperStyle}>  
     <form className={classes.root} noValidate autoComplete="off">
       <Select 
         className="dropdown"
@@ -74,21 +92,10 @@ return (
         isClearable
         
       />   
-      <Button className='button-style' variant="contained" color="secondary"  size='medium' onClick={handleClick}> Search </Button>  
+      <Button className='button-style' variant="contained" color="primary"  size='medium' onClick={handleClick}> Search </Button>  
       </form>  
       </Paper>   
-     
-      <h1>Employees with Above Skills</h1>
-
-      <Paper elevation={3} style={paperStyle}>
-             {employees_list.map(employee=>(
-             <Paper elevation={6} style={{margin:"10px",padding:"15px", textAlign:"left"}} key={employee.userid}>
-              Name:{' '+employee.firstName +' ' +employee.lastName}<br/>
-              Email:{' ' +employee.username}<br/>
-              Experience : {' '+employee.experience}
-             </Paper>
-             ))}
-      </Paper>
+      { showResults ? <Results /> : null }
   </div>
        );
 }

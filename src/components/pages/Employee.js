@@ -14,7 +14,7 @@ export default function Employee() {
         buttonSize='btn--large'
         link={"/profile"}
       >
-       View My Details
+       Add Me
       </Button>
 
       <Button
