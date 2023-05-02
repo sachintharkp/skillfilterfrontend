@@ -15,8 +15,6 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const paperStyle={padding:'50px 20px', width:600,margin:"20px auto"}
-
 const FormpaperStyle={padding:'50px 20px',width: 600,margin:"20px auto" ,maxHeight: '100vh'}
 
 const ListpaperStyle={padding:'50px 20px',width: 'fit-content',margin:"20px auto" ,maxHeight: '100vh',overflow: 'auto'}
