@@ -1,22 +1,23 @@
 import React from 'react';
 import '../App.css';
-import { Button } from './Button';
 import './HeroSection.css';
+import { Button } from './Button';
 
 function HeroSection() {
+
   return (
     <div className='hero-container'>
       <h1>Welcome</h1>
-      <p>What are you waiting for?</p>
-      <div className='hero-btns'>
-        <Button
+      <p>What are you waiting for? Get Start Now</p>
+      <br/>
+      <Button
           className='btns'
           buttonStyle='btn--outline'
           buttonSize='btn--large'
+          link={'/register'}
         >
-          GET STARTED
+          REGISTER
         </Button>
-      </div>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import './AllFeatures.css';
-import { Paper,Box} from '@material-ui/core';
+import { Paper,Box,Button} from '@material-ui/core';
 
 function SearchEmployee() {
 
@@ -19,6 +19,8 @@ const searchBarStyle={width: '550px', maxWidth:'100vh'}
 const FormpaperStyle={padding:'50px 20px',width: '600px', maxWidth:'100vh',margin:"20px auto" ,maxHeight: '100vh'}
 
 const ListpaperStyle={padding:'50px 20px',width: '600px', maxWidth:'100vh',margin:"20px auto" ,maxHeight: '100vh',overflow: 'auto'}
+
+const ViewProfileBtnStyle = {float: "right"}
 
 useEffect(() => {
     fetch("http://localhost:8081/user/getUsers")
@@ -39,12 +41,15 @@ const showResult=(value)=>{
 } 
      
 const Results = () => (
-  <Paper elevation={3} style={ListpaperStyle}>
-    <h3>Employee Details</h3> 
+  <>
+    <Paper elevation={3} style={ListpaperStyle}>
               Name:{' '+user.firstName +' ' +user.lastName}<br/>
               Email:{' ' +user.username}<br/>
-              Experience : {' '+user.experience}
-  </Paper>
+              Experience : {' '+user.experience} 
+              <Button color="primary" style={ViewProfileBtnStyle} href="/UpdateProfile">View Profile</Button>
+    </Paper>
+   
+   </>
 )
 
   return (
