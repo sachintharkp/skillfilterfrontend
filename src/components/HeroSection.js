@@ -10,6 +10,7 @@ function HeroSection() {
       <h1>Welcome</h1>
       <p>What are you waiting for? Get Start Now</p>
       <br/>
+      <div className='hero-btns'>
       <Button
           className='btns'
           buttonStyle='btn--outline'
@@ -18,6 +19,16 @@ function HeroSection() {
         >
           REGISTER
         </Button>
+
+        <Button
+          className='btns'
+          buttonStyle='btn--outline'
+          buttonSize='btn--large'
+          link={'/login'}
+        >
+          LOGIN
+        </Button>
+        </div>
     </div>
   );
 }

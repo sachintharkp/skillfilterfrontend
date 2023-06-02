@@ -3,8 +3,11 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import './AllFeatures.css';
 import { Paper,Box,Button} from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
 function SearchEmployee() {
+
+const navigate = useNavigate();
 
 const [employee_list,setEmployees]=useState(null); 
 
@@ -39,22 +42,32 @@ const showResult=(value)=>{
             setShowResults(true);
           })
 } 
+
+const viewProfileClick =(e)=>{
+ 
+navigate('/UpdateProfile',{
+  state:{
+    user :user.userid,
+  },
+});
+}
      
 const Results = () => (
   <>
     <Paper elevation={3} style={ListpaperStyle}>
+              ID:{' '+user.userid}<br/>
               Name:{' '+user.firstName +' ' +user.lastName}<br/>
               Email:{' ' +user.username}<br/>
               Experience : {' '+user.experience} 
-              <Button color="primary" style={ViewProfileBtnStyle} href="/UpdateProfile">View Profile</Button>
+              <Button color="primary" style={ViewProfileBtnStyle}  onClick={(e)=>{viewProfileClick(e)}}>View Profile</Button>
     </Paper>
    
-   </>
+ </>
 )
 
   return (
 
-    <div className='filter-container'>
+  <div className='filter-container'>
    <Paper elevation={3} style={FormpaperStyle}>  
     <Autocomplete
       disablePortal
