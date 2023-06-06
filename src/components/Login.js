@@ -88,11 +88,10 @@ function Login() {
             }else{
               clearField();
               const data = result.userid;
-              navigate('/UpdateProfile',{
-                    state:{
-                      user :data,
-                    },
-              });
+              localStorage.setItem("user_global",data)
+              localStorage.setItem("logstatus","logged")
+              localStorage.setItem("roletype",result.role)
+              navigate('/UpdateProfile')              
             }
      
        })  

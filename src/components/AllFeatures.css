@@ -19,4 +19,11 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
       'Lucida Sans', Arial, sans-serif;
   }
+  .radio-button{
+    align-items: center;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: -11px;
+    margin-right: 16px;
+  }
   

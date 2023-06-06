@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 
 function AddAssignment() {
-    const useStyles = makeStyles((theme) => ({
+     const useStyles = makeStyles((theme) => ({
         root: {
           '& > *': {
             margin: theme.spacing(1),
@@ -86,15 +86,6 @@ function AddAssignment() {
 
          window.location.reload()
     }
-
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-      }));
-     
     
     return (
       <div className='filter-container'> 
@@ -104,9 +95,9 @@ function AddAssignment() {
             <Typography gutterBottom variant="h5" component="div">Add Assignment</Typography>
             <form className={classes.root} noValidate autoComplete="off">
             {!isValid ? <Alert severity='error'>{alertContent}</Alert> : <></> }
-            <TextField id="outlined-basic" label="Company" variant="outlined" fullWidth value={companyName} onChange={(e)=>{setCompany(e.target.value)}} required/>
-            <TextField id="outlined-basic" label="Position" variant="outlined" fullWidth value={position} onChange={(e)=>{setPosition(e.target.value)}} required  />  
-            <TextField id="outlined-basic" label="Available Seats" variant="outlined" fullWidth value={noSeats} onChange={(e)=>{setSeats(e.target.value)}} required />  
+            <TextField  type = "text" id="outlined-basic" label="Company" variant="outlined" fullWidth value={companyName} onChange={(e)=>{setCompany(e.target.value)}} required/>
+            <TextField type = "text"  id="outlined-basic" label="Position" variant="outlined" fullWidth value={position} onChange={(e)=>{setPosition(e.target.value)}} required  />  
+            <TextField type="number" id="outlined-basic" label="Available Seats" variant="outlined" fullWidth value={noSeats} onChange={(e)=>{setSeats(e.target.value)}} required />  
             <Button className='button-style' variant="contained" color="secondary"  size='medium' onClick={(e)=>{checkTextInput(e)}} > Add </Button>  
             </form>  
           </Paper>   

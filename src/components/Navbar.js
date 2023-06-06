@@ -5,9 +5,18 @@ import './Navbar.css';
 
 function Navbar() {
     const[click,setClick] = useState(false);
+
+    const[logStatus,setLogStatus] = useState();
+    const[logRole,setLogRole] = useState()
     
     const handleClick = () => setClick(!click)
     const closeMobileMenu = () => setClick(false);
+
+
+    useEffect(()=>{
+      setLogStatus(localStorage.getItem("logstatus"));
+      setLogRole(localStorage.getItem("roletype"));
+    });
 
   return (
     <>
@@ -42,10 +51,15 @@ function Navbar() {
               Assignment
               </Link>
             </li>  
-            <li className='nav-item'>
+            <li className='nav-item' isDisabled = {logStatus !="logged"}>
               <Link to='/UpdateProfile' className='nav-links' onClick={closeMobileMenu}>
               Profile
               </Link>
+            </li>    
+            <li className='nav-item' isDisabled = {logStatus !="logged"}>
+              <Link className='nav-links' onClick={closeMobileMenu}>
+             Logout
+            </Link>
             </li>       
           </ul>
         </div>

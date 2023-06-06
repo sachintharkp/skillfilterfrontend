@@ -133,11 +133,8 @@ function RegisterUser() {
           }else{
             clearField();
             const data = result.userid;
-            navigate('/UpdateProfile',{
-                  state:{
-                    user :data,
-                  },
-            });
+            localStorage.setItem("user_global",data)
+            navigate('/UpdateProfile');
           }
    
      })  
