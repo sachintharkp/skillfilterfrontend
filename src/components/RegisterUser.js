@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import './AllFeatures.css';
-import { Container ,Paper,Button,Box} from '@material-ui/core';
+import { Container ,Paper,Button} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@mui/material/Alert';
@@ -34,17 +34,6 @@ function RegisterUser() {
         { value: 'employee', label: 'Employee' },
         { value: 'manager', label: 'Manager' }
       ]
-    
-     /* Login user when user registered. */ 
-    const[logStatus,setLogStatus] = useState();
-    const[logRole,setLogRole] = useState() 
-
-    useEffect(()=>{
-      setLogStatus(localStorage.getItem("logstatus"));
-      setLogRole(localStorage.getItem("roletype"));
-    });
-
-
 
     /**
      * Error Handling
@@ -130,7 +119,7 @@ function RegisterUser() {
       }).then(res => {
          if(res.ok){
          setShowError(true);
-         setErrorContent("User Successfully Added");
+         setErrorContent("Successfully Registered");
          setStatus(true);
          }
          else{
@@ -142,29 +131,14 @@ function RegisterUser() {
           setShowError(true);
           setErrorContent(result.message);
           }else{
-            clearField();
-            const data = result.userid;
-            localStorage.setItem("user_global",data)
-            localStorage.setItem("logstatus","logged")
-            localStorage.setItem("roletype",result.role)
-            navigate('/');     
+            navigate('/login');     
           }
    
      })  
     }
-
     const cancelClick=(e)=>{
       navigate('/')
     }    
-
-    const clearField = () =>{
-      setfName("");   
-      setlName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-      setExp("");
-    }
 
   return (
     <div className='filter-container'>           

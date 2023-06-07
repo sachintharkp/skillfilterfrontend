@@ -23,7 +23,7 @@ function Navbar() {
 
     /* Logout request*/
 
-    const clickLogout=(e)=>{
+  const clickLogout=(e)=>{
       setClick(false);
       const user = {userid}      
       fetch("http://localhost:8081/logout",{
@@ -37,8 +37,8 @@ function Navbar() {
         if(result.status == "SUCCESS"){
           localStorage.removeItem("user_global");
           localStorage.removeItem("logstatus");
-          localStorage.removeItem("roletype");
-          navigate('/');        
+          localStorage.removeItem("roletype"); 
+          window.location.reload();
         } 
    })  
   }
