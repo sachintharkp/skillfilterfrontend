@@ -24,9 +24,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import StarIcon from '@mui/icons-material/Star';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
-function UpdateProfile() {
-  const navigate = useNavigate();
+function EmployeeProfile() {
   const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
@@ -41,7 +41,9 @@ const FormpaperStyle={padding:'50px 20px',width: 600,margin:"20px auto" ,maxHeig
 const GridStyle = { margin: '10px auto' ,}
  
 const classes = useStyles();
- 
+
+const navigate = useNavigate();
+const location =  useLocation();
 const[userid,setUserId] = useState("");
 const[firstName,setfName] = useState("");
 const[lastName,setlName] = useState("");
@@ -57,38 +59,6 @@ const [saved_selected_skills,setSavedSelectedSkills]=useState([]);
 const [saved_assignments,setSavedAssignments]=useState([]);
 const [saved_active_assignments,setSavedActiveAssignments]=useState([]);
 const[isActiveAssignment,setIsActiveAssignment] = useState(false);
-
-
- /**
-     * Error Handling
- */  
-
- const [showError, setShowError] = React.useState(false)
- const [errorContent, setErrorContent] = useState('');
- const[success,setStatus] = React.useState();
- 
- const ErrorResponse = () => (
-     <Alert severity = {success ? "success":"error"}>{errorContent}</Alert>
-   )
-
-/*Validation logic*/
-
-const [isValid, setValidation] = React.useState(true);
-const [alertContent, setAlertContent] = useState('');
-
-
-const checkTextInputSubmit =(e)=>{
-
-  //Check for the year experience input 
-  if (!experience.trim()) {
-      setValidation(false);
-      setAlertContent("Years of experience is mandotory and should be a number.");
-      return;
-  }  
-  setValidation(true); 
-  handleClick();
- 
-};
 
 
 const handleSelectedSkill = (e) => {
@@ -115,8 +85,8 @@ useEffect(()=>{
   )
   },[])
 
-  useEffect(() => {
-  const userId = localStorage.getItem("user_global");
+  useEffect(() => {  
+  const userId = location.state.user;  
   setUserId(userId);
   const url = new URL('http://localhost:8081/user/getUser');
   url.searchParams.set('userid', userId);
@@ -151,53 +121,11 @@ useEffect(()=>{
       )
   }, []);
 
- /** Update logic */     
-
- const handleClick=(e)=>{
-
-        const user = {userid,username,password,firstName,lastName,experience, skillId: selected_skills,activeAssignmentId:selected_assingnment,assignmentstatus}     
-        fetch("http://localhost:8081/user/update",{
-          method:"PUT",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(user),
-      }).then(res => {
-        if(res.ok){
-        setShowError(true);
-        setErrorContent("Successfully updated");
-        setStatus(true);
-        }
-        else{
-        setStatus(false);
-        }
-        return res.json();
-     })
-         .then((result)=>{
-          if(result.message != null){
-            setShowError(true);
-            setErrorContent(result.message);
-            }
-          })
-         .then(data => console.log(data))
-         .catch(err => console.log(err))
-    }
-
-const cancelClick=(e)=>{
+const okClick=(e)=>{
   navigate('/')
 }    
 
-/*Assignment details logic*/
-
-const handleSelectedAsssignment = (e) => {
-  setSelectedAssignment(e?.value);
-  }
-
-const handleAssignmentStatus=(e) =>{
-  setAssignmentStatus(e.target.value);
-}  
-
-/*Assignment history*/ 
+  /*Assignment history*/ 
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
@@ -217,9 +145,8 @@ const handleAssignmentStatus=(e) =>{
 return (
   <div className='filter-container'>           
   <Paper elevation={3} style={FormpaperStyle}>  
-    <Typography gutterBottom variant="h5" component="div">Update Profile</Typography>
+    <Typography gutterBottom variant="h5" component="div">Profile</Typography>
     <form className={classes.root} noValidate autoComplete="off">
-    {!isValid ? <Alert severity='error'>{alertContent}</Alert> : <></> }
     <Grid container spacing={1} style={GridStyle}>
       <Grid item xs={6}> 
       <TextField type = "text" id="firstName" label="First Name" variant="filled" fullWidth value={firstName} />
@@ -238,7 +165,7 @@ return (
    </Grid>
    <Grid container spacing={1} style={GridStyle}>
     <Grid item xs={12}>
-    <TextField type="number" id="experience" label="Years of Experience" variant="outlined" fullWidth value={experience} onChange={(e)=>{setExp(e.target.value)}} required />  
+    <TextField type="number" id="experience" label="Years of Experience" variant="filled" fullWidth value={experience} />  
     </Grid>
     </Grid>   
     <Grid container spacing={1} style={GridStyle}>
@@ -248,10 +175,11 @@ return (
        placeholder="Select Your Skills"
        value={selected_skills != null ? skill_list.find(obj => selected_skills.includes(obj.value)) : [] }
        options ={skill_list.map(opt => ({ key: opt.skillId ,label: opt.skillName, value: opt.skillId}))} 
-       onChange={handleSelectedSkill}
        defaultValue={saved_selected_skills != null ? saved_selected_skills :[]}
        isMulti
-       isClearable/>  
+       isClearable
+       isDisabled = {true}
+       />  
     </Grid>
     </Grid>
     <Grid container spacing={1} style={GridStyle}> 
@@ -261,9 +189,9 @@ return (
       <Grid container spacing={1} style={GridStyle}> 
       <RadioGroup
         name="assignment"
-        onChange={handleAssignmentStatus}
         value={assignmentstatus}
         row
+        isDisabled = {true}
       >       
       <FormControlLabel value="New" control={<Radio/>} label="New" />    
       <FormControlLabel value="Assigned" control={<Radio/>} label="Assigned" />  
@@ -280,19 +208,16 @@ return (
        placeholder="Select Your New Active Assignment"
        value={selected_assingnment != null ? assignment_list.find(obj => assignment_list.includes(obj.value)):""}
        options ={assignment_list.map(opt => ({ key: opt.activeAssignmentId ,label: opt.companyName + ' , ' +opt.position, value: opt.activeAssignmentId}))} 
-       onChange={handleSelectedAsssignment}
        isClearable 
-       isDisabled = {assignmentstatus == "No" || assignmentstatus == "Assigned"}
+       isDisabled = {true}
     />
     </Grid>
       <Grid item xs={3}>
       <Button color="primary"  onClick={handleClickOpen}>View Hitory</Button>
       </Grid>
    </Grid>
-    { showError ? <ErrorResponse /> : null }
     <br/>
-    <Button className='button-style' variant="contained" color="primary"  size='medium' onClick={(e)=>{checkTextInputSubmit(e)}} > Update </Button>
-    <Button className='button-style' variant="contained" color="inherit"  size='medium' onClick={(e)=>{cancelClick(e)}} > cancel </Button>
+    <Button className='button-style' variant="contained" color="inherit"  size='medium' onClick={(e)=>{okClick(e)}} > Ok </Button>
     </form>  
   </Paper>    
   <Dialog
@@ -336,6 +261,4 @@ return (
 </div>
        );
 }
-export default UpdateProfile
-
-
+export default EmployeeProfile

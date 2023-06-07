@@ -20,7 +20,7 @@ function Login() {
       
         const FormpaperStyle={padding:'50px 20px',width: 600,margin:"20px auto" ,maxHeight: '100vh'}
        
-        const classes = useStyles();
+      const classes = useStyles();
       
       const[username,setEmail] = useState("");
       const[password,setPassword] = useState("");
@@ -91,7 +91,7 @@ function Login() {
               localStorage.setItem("user_global",data)
               localStorage.setItem("logstatus","logged")
               localStorage.setItem("roletype",result.role)
-              navigate('/UpdateProfile')              
+              navigate('/');        
             }
      
        })  

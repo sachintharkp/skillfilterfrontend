@@ -43,9 +43,8 @@ const showResult=(value)=>{
           })
 } 
 
-const viewProfileClick =(e)=>{
- 
-navigate('/UpdateProfile',{
+const viewProfileClick =(e)=>{ 
+navigate('/EmployeeDetailS',{
   state:{
     user :user.userid,
   },
@@ -55,7 +54,6 @@ navigate('/UpdateProfile',{
 const Results = () => (
   <>
     <Paper elevation={3} style={ListpaperStyle}>
-              ID:{' '+user.userid}<br/>
               Name:{' '+user.firstName +' ' +user.lastName}<br/>
               Email:{' ' +user.username}<br/>
               Experience : {' '+user.experience} 

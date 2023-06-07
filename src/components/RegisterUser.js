@@ -35,6 +35,17 @@ function RegisterUser() {
         { value: 'manager', label: 'Manager' }
       ]
     
+     /* Login user when user registered. */ 
+    const[logStatus,setLogStatus] = useState();
+    const[logRole,setLogRole] = useState() 
+
+    useEffect(()=>{
+      setLogStatus(localStorage.getItem("logstatus"));
+      setLogRole(localStorage.getItem("roletype"));
+    });
+
+
+
     /**
      * Error Handling
      */  
@@ -134,7 +145,9 @@ function RegisterUser() {
             clearField();
             const data = result.userid;
             localStorage.setItem("user_global",data)
-            navigate('/UpdateProfile');
+            localStorage.setItem("logstatus","logged")
+            localStorage.setItem("roletype",result.role)
+            navigate('/');     
           }
    
      })  

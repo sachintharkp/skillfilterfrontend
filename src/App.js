@@ -10,6 +10,7 @@ import UpdateEmployeeProfile from './components/pages/UpdateEmployeeProfile';
 import Navbar from './components/Navbar'
 import Register from './components/pages/Register';
 import LoginUser from './components/pages/LoginUser';
+import EmployeeDetailProfile from './components/pages/EmployeeDetailProfile';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/register" element={<Register/>} />
           <Route path='/login' element={<LoginUser/>}/>
           <Route path="/UpdateProfile"element={<UpdateEmployeeProfile/>} />
+          <Route path="/EmployeeDetailS"element={<EmployeeDetailProfile/>} />
       </Routes>
     </Router>
   </>
