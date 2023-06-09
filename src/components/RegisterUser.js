@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import Select from 'react-select';
+import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
 
 function RegisterUser() {
@@ -20,6 +21,7 @@ function RegisterUser() {
       }));
     
       const FormpaperStyle={padding:'50px 20px',width: 600,margin:"20px auto" ,maxHeight: '100vh'}
+      const GridStyle = { margin: '10px auto' ,}
      
       const classes = useStyles();
      
@@ -146,18 +148,43 @@ function RegisterUser() {
       <Typography gutterBottom variant="h5" component="div">Register</Typography>
       <form className={classes.root} noValidate autoComplete="off">
       {!isValid ? <Alert severity='error'>{alertContent}</Alert> : <></> }
+      <Grid container spacing={1} style={GridStyle}>
+      <Grid item xs={6}> 
       <TextField type = "text" id="firstName" label="First Name" variant="outlined" fullWidth value={firstName} onChange={(e)=>{setfName(e.target.value) }} required/>
+      </Grid>
+      <Grid item xs={6}> 
       <TextField type = "text" id="lastName" label="Last Name" variant="outlined" fullWidth value={lastName} onChange={(e)=>{setlName(e.target.value)}} required/>
+      </Grid>
+      </Grid>
+      <Grid container spacing={1} style={GridStyle}>
+      <Grid item xs={12}> 
       <TextField type = "text" id="username" label="Email" variant="outlined" fullWidth value={username} onChange={(e)=>{setEmail(e.target.value) }} required  />  
+      </Grid>   
+      </Grid>      
+      <Grid container spacing={1} style={GridStyle}>
+      <Grid item xs={6}> 
       <TextField type = "password" id="password"  label="Password" variant="outlined" fullWidth value={password} onChange={(e)=>{setPassword(e.target.value) }} required  />  
+      </Grid>
+      <Grid item xs={6}> 
       <TextField type = "password" id="confirm_password"  label="Confirm Password" variant="outlined" fullWidth value={confirm_password} onChange={(e)=>{setConfirmPassword(e.target.value) }} required  />  
+      </Grid>
+      </Grid>
+      <Grid container spacing={1} style={GridStyle}>
+      <Grid item xs={12}> 
       <Select
         options={options}
         onChange={handleRoleChange} autoFocus={true} 
-        label= "Role"
+        placeholder="Role"
+        defaultValue={options[0]}
        />
+      </Grid>
+      </Grid>         
+      <Grid container spacing={1} style={GridStyle}>
+      <Grid item xs={12}> 
       <TextField type="number" id="experience" label="Years of Experience" variant="outlined" fullWidth value={experience} onChange={(e)=>{setExp(e.target.value)}} required />  
-      { showError ? <ErrorResponse /> : null }
+      </Grid>
+      </Grid> 
+     { showError ? <ErrorResponse /> : null }
       <br/>
       <Button className='button-style' variant="contained" color="primary"  size='medium' onClick={(e)=>{checkTextInputSubmit(e)}} > Add </Button>
       <Button className='button-style' variant="contained" color="inherit"  size='medium' onClick={(e)=>{cancelClick(e)}} > cancel </Button>
