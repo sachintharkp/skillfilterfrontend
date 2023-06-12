@@ -54,6 +54,7 @@ const [assignment_list,setAssignments]=useState([])
 const [selected_assingnment,setSelectedAssignment]=useState("")
 const [assignmentstatus,setAssignmentStatus]=useState("");
 const [saved_selected_skills,setSavedSelectedSkills]=useState([]);
+const [saved_All_selected_skills,setSavedAllSelectedSkills]=useState([]);
 const [saved_assignments,setSavedAssignments]=useState([]);
 const [saved_active_assignments,setSavedActiveAssignments]=useState([]);
 const[isActiveAssignment,setIsActiveAssignment] = useState(false);
@@ -93,6 +94,7 @@ const checkTextInputSubmit =(e)=>{
 
 const handleSelectedSkill = (e) => {
     setSelectedSkills(Array.isArray(e) ? e.map(x => x.value) : []);
+    setSavedAllSelectedSkills(Array.isArray(e) ? e.map(x => x.value) : []);
   }
 
 /* API Call for the backend services.*/ 
@@ -135,6 +137,7 @@ useEffect(()=>{
                 value: skills.skillId
               }     
               saved_selected_skills.push(exitSlill) ;
+              saved_All_selected_skills.push(skills.skillId);
             }) 
             if((result.activeAssignment).length >0){
               setAssignmentStatus("Assigned");
@@ -158,8 +161,7 @@ useEffect(()=>{
  /** Update logic */     
 
  const handleClick=(e)=>{
-
-        const user = {userid,username,password,firstName,lastName,experience, skillId: selected_skills,activeAssignmentId:selected_assingnment,assignmentstatus}     
+        const user = {userid,username,password,firstName,lastName,experience, skillId: saved_All_selected_skills,activeAssignmentId:selected_assingnment,assignmentstatus}     
         fetch("http://localhost:8081/user/update",{
           method:"PUT",
           headers: {
@@ -182,6 +184,37 @@ useEffect(()=>{
             setShowError(true);
             setErrorContent(result.message);
             }
+          else{
+            setfName(result.firstName);
+            setlName(result.lastName);
+            setEmail(result.username);
+            setExp(result.experience);
+            setPassword(result.password);
+            result.skill.map(skills => {
+              const exitSlill = {
+                key: skills.skillId,
+                label: skills.skillName,
+                value: skills.skillId
+              }     
+              saved_selected_skills.push(exitSlill) ;
+              saved_All_selected_skills.push(skills.skillId);
+            }) 
+            if((result.activeAssignment).length >0){
+              setAssignmentStatus("Assigned");
+              result.activeAssignment.map(assignments =>{              
+                if(assignments.status){
+                  saved_active_assignments.push(assignments);
+                  setIsActiveAssignment(true);    
+                }
+                else{
+                  saved_assignments.push(assignments);     
+                }
+              })
+            }
+            else{
+              setAssignmentStatus("No");
+            } 
+          }  
           })
          .then(data => console.log(data))
          .catch(err => console.log(err))
