@@ -31,7 +31,7 @@ function RegisterUser() {
     const[password,setPassword] = useState("");
     const[confirm_password,setConfirmPassword] = useState("");
     const[experience,setExp] = useState("");    
-    const[role,setRole]=useState("");
+    const[role,setRole]=useState('employee');
     const options = [
         { value: 'employee', label: 'Employee' },
         { value: 'manager', label: 'Manager' }
