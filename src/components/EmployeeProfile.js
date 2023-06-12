@@ -105,18 +105,23 @@ useEffect(()=>{
                 value: skills.skillId
               }     
               saved_selected_skills.push(exitSlill) ;
-            })           
-            result.activeAssignment.map(assignments =>{
-            if(assignments.status){
-              saved_active_assignments.push(assignments);
-              setIsActiveAssignment(true);
+            })     
+            if((result.activeAssignment).length >0){
               setAssignmentStatus("Assigned");
+              result.activeAssignment.map(assignments =>{              
+                if(assignments.status){
+                  saved_active_assignments.push(assignments);
+                  setIsActiveAssignment(true);    
+                }
+                else{
+                  saved_assignments.push(assignments);     
+                }
+              })
             }
             else{
-              saved_assignments.push(assignments);
               setAssignmentStatus("No");
-            }
-          })
+            }    
+    
           }
       )
   }, []);
